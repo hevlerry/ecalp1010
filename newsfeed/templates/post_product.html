@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Product Listing - Marketplace</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+
+.product-info p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.button-group .button {
+  background-color: #2196F3;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-group .button:hover {
+  background-color: #3e8e41;
+}
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-bottom: none; /* Remove border bottom */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .button {
+            background-color:  #2196F3;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #3e8e41;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Add padding to the bottom of the body */
+        }
+        .error-message {
+    color: red;
+    border: 1px solid red;
+    padding: 5px;
+    background-color: #ffcccc;
+}
+
+        footer {
+            background-color: ;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+        }
+        .post-product-box {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.post-product-box h2 {
+  margin-top: 0;
+  text-align: left;
+}
+
+.product-info .form-group {
+  margin-bottom: 20px;
+  display: inline-block;
+  text-align: left;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.product-info label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.product-info input, .product-info textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.product-info textarea {
+  height: 100px;
+}
+
+.button-group {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  text-align: center;
+}
+
+.button-group .button {
+  background-color: #2196F3;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-group .button:hover {
+  background-color: #3e8e41;
+}
+header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Ecalp Techmar</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'newsfeed:newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+<section id="post-product">
+    <div class="container">
+        <h2>Post a Product Listing</h2>
+        <div class="post-product-box">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_title">Title:</label>
+                    {{ form.title }}
+                </div>
+                <div class="form-group">
+                    <label for="id_description">Description:</label>
+                    {{ form.description }}
+                </div>
+                <div class="form-group">
+                    <label for="id_price">Price:</label>
+                    {{ form.price }}
+                </div>
+                <div class="form-group">
+                    <label for="id_image">Image:</label>
+                    {{ form.image }}
+                </div>
+                <div class="form-group">
+                    <label for="id_mobile_number">Mobile Number (+63)</label>
+                    {% if form.mobile_number.errors %}
+                        <div class="error-message">
+                            {{ form.mobile_number }}
+                            <span>{{ form.mobile_number.errors }}</span>
+                        </div>
+                    {% else %}
+                        {{ form.mobile_number }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="id_location">Location:</label>
+                    {{ form.location }}
+                </div>
+                <div class="form-group">
+                    <label for="id_category">Category:</label>
+                    {{ form.category }}
+                </div>
+                <button type="submit" class="button">Post</button>
+            </form>
+        </div>
+    </div>
+</section>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

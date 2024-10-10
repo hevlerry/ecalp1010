@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      /* Global Styles */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body, html {
+        height: 100vh;
+        width: 100vw;
+        font-family: 'Open Sans', sans-serif; /* Added a modern sans-serif font */
+        font-size: 16px;
+      }
+
+      /* Header Styles */
+      header {
+        background-color: #333;
+        padding: 20px;
+        text-align: center;
+        color: #fff;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif; /* Added a bold font for the logo */
+      }
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+      }
+      nav li {
+        margin-right: 20px;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px; /* Increased font size for navigation links */
+      }
+
+      /* Home Section Styles */
+      #home {
+        background-image: url("{% static 'main/pexels-veeterzy-303383.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        width: 100vw;
+        padding: 10px;
+        color: #fff;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .home-content {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .home-content h2 {
+        font-size: 36px;
+        margin-bottom: 10px;
+        font-family: 'Playfair Display', serif; /* Added a serif font for headings */
+      }
+
+      /* About Section Styles */
+      #about {
+        background-color: #fff;
+        padding: 50px;
+      }
+      #about h2 {
+        margin-top: 0;
+        font-family: 'Playfair Display', serif; /* Added a serif font for headings */
+      }
+
+      /* Footer Styles */
+      footer {
+        background-color: #333;
+        padding: 10px;
+        text-align: center;
+        color: #fff;
+      }
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .social-links {
+        margin-left: 20px;
+      }
+      .social-links a {
+        margin-right: 10px;
+        color: #fff;
+      }
+      header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+      footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">MARKET PLACE</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'contact' %}"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                    <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home">
+    <div class="container">
+        <div class="home-content">
+            <h2 style="font-size: 72px;">Ecalp Techmar</h2>
+            <p>Buy and Sell</p>
+        </div>
+    </div>
+</section>
+
+    <section id="about">
+    <div class="container" style="text-align: center;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 36px;">About Us</h2>
+        <div class="about-content" style="display: inline-block; text-align: center;">
+            <p style="font-family: 'Open Sans', sans-serif; font-size: 18px; margin-bottom: 20px;">Welcome to Ecalp Techmar, the premier online marketplace for Holy Angel University students, faculty, and staff. Our mission is to provide a safe, convenient, and trustworthy platform for buying and selling goods and services within our community.</p>
+            <p style="font-family: 'Open Sans', sans-serif; font-size: 18px; margin-bottom: 20px;">We are committed to fostering a culture of trust, respect, and responsibility among our users. Our platform is designed to be user-friendly, secure, and reliable, ensuring that every transaction is smooth and hassle-free.</p>
+            <p style="font-family: 'Open Sans', sans-serif; font-size: 18px;">Join us in building a vibrant and inclusive marketplace that benefits everyone in the Holy Angel University community. Buy, sell, and connect with us today!</p>
+        </div>
+        <div class="about-image" style="display: inline-block;">
+            <img src="{% static 'main/haulogo.png' %}" alt="Holy Angel University Logo" style="width: 100px; height: 100px; border-radius: 50%;">
+        </div>
+    </div>
+</section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

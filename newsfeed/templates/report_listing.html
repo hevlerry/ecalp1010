@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Marketplace</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .report-form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.report-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.report-button:hover {
+    background-color: #3e8e41;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+.report-button {
+    position: relative; /* add this */
+    padding-left: 25px; /* add this */
+    background-color: #dc3545; /* change the background color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+}
+
+.report-button:hover {
+    background-color: #c82333; /* change the hover background color */
+}
+
+.report-button i {
+    margin-right: 5px; /* add this */
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+
+header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
+    </style>
+</head>
+<body>
+    <!-- rest of the HTML structure -->
+    <header>
+        <div class="container">
+            <h1 class="logo">Ecalp Techmar</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'newsfeed:newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
+        </div>
+    </header>
+<section id="report-listing">
+    <div class="container">
+        <h2>Report Listing</h2>
+        <form method="post" class="report-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="reason" class="form-label">Reason for reporting:</label>
+                <textarea id="reason" name="reason" rows="5" cols="50" class="form-control"></textarea>
+            </div>
+           <button type="submit" class="report-button">Submit</button>
+        </form>
+    </div>
+</section>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

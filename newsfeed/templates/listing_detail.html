@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Detail - Marketplace</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .listing-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .listing-info h2 {
+            margin-bottom: 20px;
+        }
+
+        .listing-info p {
+            margin-bottom: 10px;
+        }
+
+        .listing-card {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .listing-card h3 {
+            margin-top: 0;
+            text-align: left;
+        }
+
+        .listing-card p {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        .button:hover {
+            background-color: #3e8e41;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        .edit-button {
+            background-color: #4CAF50;
+        }
+
+        .edit-button:hover {
+            background-color: #3e8e41;
+        }
+
+        .button i {
+            margin-right: 5px;
+        }
+
+        .report-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        .report-button:hover {
+            background-color: #c82333;
+        }
+
+        .button-group {
+            margin-bottom: 20px;
+        }
+
+        header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Ecalp Techmar</h1>
+            <nav>
+                <ul>
+                    {% if not request.user.is_staff %}
+                        <li><a href="{% url 'newsfeed:newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
+                    {% endif %}
+                    {% if request.user.is_staff %}
+                        <li>
+                            <a href="{% url 'custom_admin:admin_dashboard' %}"><i class="fas fa-home"></i> Home </a>
+                        </li>
+                    {% else %}
+
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+        <section id="listing-detail">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="container">
+            <h2>Listing Detail</h2>
+            <div class="listing-info">
+                <div class="listing-card">
+                 <a href="{{ product.image.url }}" target="_blank">
+                    <img src='{{ product.image.url }}' style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+                 </a>
+                </div>
+                <h2>{{ product.title }}</h2>
+                <p>Category: {{ product.category }}</p>
+                <p>Description: {{ product.description }}</p>
+                <p>Price: {{ product.price }}</p>
+                <p>Mobile Number: +63 {{ product.mobile_number }}</p>
+                <p>Location: {{ product.location }}</p>
+                <p>Posted by: {{ product.user.username }}</p>
+                <p>Posted at: {{ product.created_at }}</p>
+            </div>
+            <div class="button-group">
+                {% if product.user != request.user %}
+                    <a href="{% url 'newsfeed:report_listing' product.pk %}" class="button report-button" style="color: #white; background-color: darkred; border-color: #FF0000;">
+                        <i class="fas fa-exclamation" style="color: white;"></i> Report Listing
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

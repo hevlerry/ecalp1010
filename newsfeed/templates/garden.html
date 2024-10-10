@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsfeed - Marketplace</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .product {
+            display: inline-block;
+            margin: 20px;
+            width: 45%; /* Adjusted width to 45% */
+            vertical-align: top;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product:nth-child(odd) {
+            background-color: #f7f7f7;
+        }
+
+        .product:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        .product img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+
+        .product h2 {
+            margin-top: 10px;
+        }
+
+        .alert {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .alert-success {
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+            color: #3c763d;
+        }
+
+        .long-description {
+            max-height: 100px; /* adjust this value to set the maximum height */
+            overflow-y: auto;
+            word-wrap: break-word;
+        }
+
+        .long-description.long {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .post-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #2196F3;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-button:hover {
+             background-color: #1A237E;
+        }
+
+        .post-button a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .post-button i {
+            margin-right: 10px;
+        }
+        header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+              footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
+                 .no-results {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Ecalp Techmar</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'newsfeed:category_selection' %}"><i class="fas fa-th"></i> Categories</a></li>
+                    <li><a href="{% url 'newsfeed:profile' request.user.pk %}"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')">
+    <i class="fas fa-sign-out-alt"></i> Logout
+</a></li>
+                </ul>
+            </nav>
+            <button class="post-button">
+              <a href="{% url 'newsfeed:post_product' %}">
+                 <i class="fas fa-plus-circle"></i> Post a Product
+              </a>
+                </button>
+        </div>
+    </header>
+
+<section id="garden">
+    <h2>Home and Garden</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" style="text-align: center;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="products">
+        {% for product in products %}
+            <div class="product">
+                <img src='{{ product.image.url }}'>
+                <h2>{{ product.title }}</h2>
+                <p>Category: {{ product.category }}</p>
+                <p class="description">{{ product.description|linebreaks|truncatewords:20 }}</p>
+                <p>Price: {{ product.price }}</p>
+                <p>Mobile Number: {{ product.mobile_number }}</p>
+                <p>Location: {{ product.location }}</p>
+                <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}">{{ product.user.username }}</a></p>
+                <p>Posted at: {{ product.created_at }}</p>
+            </div>
+        {% empty %}
+            <p class="no-results">No listings posted in this category as of the moment.</p>
+        {% endfor %}
+    </div>
+</section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
