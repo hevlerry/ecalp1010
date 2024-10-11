@@ -8,24 +8,21 @@
     <link rel="stylesheet" href="{% static 'main/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .product {
-            display: inline-block;
-            margin: 20px;
-            width: 45%; /* Adjusted width to 45% */
-            vertical-align: top;
+            flex: 0 0 calc(50% - 20px); /* Calculate the width to fit 2 products per line */
+            margin: 10px; /* Reduce the margin to 10px to accommodate two products per line */
+            box-sizing: border-box; /* Add this to include padding and border in the width calculation */
             text-align: center;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .product:nth-child(odd) {
-            background-color: #f7f7f7;
-        }
-
-        .product:nth-child(even) {
-            background-color: #ffffff;
         }
 
         .product img {
@@ -38,6 +35,20 @@
 
         .product h2 {
             margin-top: 10px;
+        }
+
+        .product:nth-child(odd) {
+            background-color: #f7f7f7;
+        }
+
+        .product:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        .product-link {
+            text-decoration: none; /* remove underlines from links */
+            color: inherit; /* inherit text color from parent */
+            display: block; /* make the link a block element */
         }
 
         .alert {
@@ -91,6 +102,7 @@
         .post-button i {
             margin-right: 20px;
         }
+
         .search-bar {
             display: flex;
             justify-content: space-between;
@@ -114,7 +126,8 @@
             border-radius: 5px;
             font-size: 16px;
         }
-                .search-bar button[type="submit"] {
+
+        .search-bar button[type="submit"] {
             background-color: #666;
             color: #fff;
             padding: 10px 20px;
@@ -138,7 +151,8 @@
             align-items: center;
             color: #fff;
         }
-      footer {
+
+        footer {
             background-image: url("{% static 'main/8422166.jpg' %}");
             background-size: cover;
             background-position: center;
@@ -148,98 +162,112 @@
             align-items: center;
             color: #fff;
         }
-      .product:hover {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px);
-}
-      .product {
-    background-color: #fff;
-    border: 1px solid #343a40;
-    border-radius: 10px;
-    padding: 20px;
-    transition: all 0.3s ease;
-}
 
-.product:hover {
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
-    transform: translateY(-25px);
-    transition: all 0.3s ease;
-}
-   .no-results {
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #ccc; /* change to your desired color */
+            padding: 10px;
+            text-align: center;
+        }
+
+        .no-results {
             text-align: center;
             margin-top: 20px;
         }
-   footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #ccc; /* change to your desired color */
-  padding: 10px;
-  text-align: center;
-}
+
+        .username-link {
+            text-decoration: underline !important; /* add underline to username link */
+            color: red !important;
+        }
+
+        .product:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #343a40;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .product:hover {
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+            transform: translateY(-25px);
+            transition: all 0.3s ease;
+        }
+
+        .product a {
+            text-decoration: none; /* remove underlines from links */
+            color: black; /* change font color to grey */
+        }
     </style>
 </head>
 <body>
     <header>
-    <div class="container">
-        <h1 class="logo">Ecalp Techmar</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'newsfeed:category_selection' %}"><i class="fas fa-list"></i> Category</a></li>
-                <li><a href="{% url 'newsfeed:profile' request.user.pk %}"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')">
-    <i class="fas fa-sign-out-alt"></i> Logout
-</a></li>
-            </ul>
-        </nav>
-        <div class="search-bar">
+        <div class="container">
+            <h1 class="logo">Ecalp Techmar</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'newsfeed:category_selection' %}"><i class="fas fa-list"></i> Category</a></li>
+                    <li><a href="{% url 'newsfeed:profile' request.user.pk %}"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="search-bar">
                 <form action="{% url 'newsfeed:search' %}" method="get">
                     <input type="search" name="q" placeholder="Search...">
                     <button type="submit"><i class="fas fa-search"></i> Search</button>
                 </form>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
     <section id="newsfeed">
         <h2>Newsfeed</h2>
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}" style="text-align: center;">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
-<div class="products">
-    {% for product in products %}
-        <a href="{% url 'newsfeed:listing_detail' product.pk %}">
-            <div class="product">
-                <img src='{{ product.image.url }}'>
-                <h2>{{ product.title }}</h2>
-                <p>Category: {{ product.category }}</p>
-                <p class="description">{{ product.description|linebreaks|truncatewords:20 }}</p>
-                <p>Price: {{ product.price }}</p>
-                <p>Mobile Number: +63 {{ product.mobile_number }}</p>
-                <p>Location: {{ product.location }}</p>
-                <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}">{{ product.user.username }}</a></p>
-                <p>Posted at: {{ product.created_at }}</p>
-                <div class="button-group">
-                    <div class="button-group">
-                        <div class="button-container">
-                            {% if product.user != request.user %}
-                                <a href="{% url 'newsfeed:report_listing' product.pk %}" class="button report-button" style="text-decoration: none;">
-                                    <i class="fas fa-flag" style="color: grey;"></i> <span style="color: grey;">Report</span>
-                                </a>
-                            {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" style="text-align: center;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="products">
+            {% for product in products %}
+                <a href="{% url 'newsfeed:listing_detail' product.pk %}" class="product-link">
+                    <div class="product">
+                        <img src='{{ product.image.url }}'>
+                        <h2>{{ product.title }}</h2>
+                        <p>Category: {{ product.category }}</p>
+                        <p class="description">{{ product.description|linebreaks|truncatewords:20 }}</p>
+                        <p>Price: {{ product.price }}</p>
+                        <p>Mobile Number: +63 {{ product.mobile_number }}</p>
+                        <p>Location: {{ product.location }}</p>
+                        <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
+                        <p>Posted at: {{ product.created_at }}</p>
+                        <div class="button-group">
+                            <div class="button-group">
+                                <div class="button-container">
+                                    {% if product.user != request.user %}
+                                        <a href="{% url 'newsfeed:report_listing' product.pk %}" class="button report-button" style="text-decoration: none;">
+                                            <i class="fas fa-flag" style="color: grey;"></i> <span style="color: grey;">Report</span>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </a>
-    {% endfor %}
-</div>
+                </a>
+            {% endfor %}
+        </div>
     </section>
 
-     <footer>
+    <footer>
         <div class="container">
             <div class="footer-content">
                 <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
@@ -247,7 +275,7 @@
         </div>
     </footer>
 
-    <button class="post-button">
+    <button class ="post-button">
         <a href="{% url 'newsfeed:post_product' %}">
             <i class="fas fa-plus-circle"></i> Post a Product
         </a>
