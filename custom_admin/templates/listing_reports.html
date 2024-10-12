@@ -257,7 +257,7 @@ header {
     </div>
 </header>
 
-   <section id="listing-reports">
+  <section id="listing-reports">
     <h2>Listing Reports</h2>
     <div class="reports">
         {% for report in reports %}
@@ -270,12 +270,13 @@ header {
                 </div>
                 <div class="button-group">
                     <div class="delete-button-container">
-    <button class="new-delete-button">
-        <a href="{% url 'custom_admin:delete_listing_report' report.pk %}" onclick="return confirm('Are you sure you want to delete this report?')">
-            Delete
-        </a>
-    </button>
-</div>
+                        <button class="new-delete-button">
+                            <a href="{% url 'custom_admin:delete_listing_report' report.pk %}" onclick="return confirm('Are you sure you want to delete this report?')">
+                                Delete
+                            </a>
+                        </button>
+                    </div>
+                    <a href="{% url 'newsfeed:listing_detail' report.product.pk %}" class="btn btn-primary">Review Listing</a>
                 </div>
             </div>
         {% endfor %}

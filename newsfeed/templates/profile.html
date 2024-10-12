@@ -260,6 +260,7 @@
             align-items: center;
             color: #fff;
         }
+
     </style>
 </head>
 <body>
@@ -310,25 +311,23 @@
         <p>{{ product.description }}</p>
         <p>Price: {{ product.price }}</p>
         <p>Posted at: {{ product.created_at }}</p>
-        {% if is_owner %}
         <div class="button-group">
             <div class="button-container">
-                <form method="post" action="{% url 'newsfeed:delete_listing' product.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="button delete-button">
-                        <i class="fas fa-trash-alt"></i> Delete Listing
-                    </button>
-                </form>
+                <a href="{% url 'newsfeed:listing_detail' product.pk %}" class="button view-button" style="background-color: #007bff; color: #ffffff;">
+    <i class="fas fa-eye"></i>
+</a>
+                {% if is_owner %}
                 <a href="{% url 'newsfeed:edit_listing' product.pk %}" class="button edit-button">
-                    <i class="fas fa-edit"></i> Edit Listing
+                    <i class="fas fa-edit"></i>
                 </a>
+                <a href="{% url 'newsfeed:delete_listing' product.pk %}" class="button delete-button">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+                {% endif %}
             </div>
         </div>
-        {% endif %}
     </div>
     {% endfor %}
-
-
 </div>
       <div class="ratings">
        <div class="rating-summary" style="text-align: center;">

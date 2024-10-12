@@ -219,27 +219,28 @@
     </div>
 </header>
 
-    <section id="user-reports">
-    <h2>Reported Users</h2>
-    <div class="reports">
-        {% for report in reports %}
-            <div class="report">
-                <h2>User: <a href="{% url 'newsfeed:profile' report.user.pk %}">{{ report.user.username }}</a></h2>
-                <div class="report-details">
-                    <p><strong>Reported by:</strong> {{ report.reported_by.username }}</p>
-                    <p><strong>Reason:</strong> {{ report.reason }}</p>
-                    <p><strong>Reported at:</strong> {{ report.created_at }}</p>
-                </div>
-                <div class="button-group">
-    <button class="new-delete-button">
-        <a href="{% url 'custom_admin:delete_user_report' report.pk %}" onclick="return confirm('Are you sure you want to delete this report?')">
-            Delete
-        </a>
-    </button>
-</div>
-            </div>
-        {% endfor %}
-    </div>
+<section id="user-reports">
+  <h2>Reported Users</h2>
+  <div class="reports">
+    {% for report in reports %}
+      <div class="report">
+        <h2>Reported User: {{ report.user.username }}</a></h2>
+        <div class="report-details">
+          <p><strong>Reported by:</strong> {{ report.reported_by.username }}</p>
+          <p><strong>Reason:</strong> {{ report.reason }}</p>
+          <p><strong>Reported at:</strong> {{ report.created_at }}</p>
+        </div>
+        <div class="button-group">
+          <button class="new-delete-button">
+            <a href="{% url 'custom_admin:delete_user_report' report.pk %}" onclick="return confirm('Are you sure you want to delete this report?')">
+              Delete
+            </a>
+          </button>
+        </div>
+       <p> </p><a href="{% url 'newsfeed:profile' report.user.pk %}" class="btn btn-primary">Review User</a> </p>
+      </div>
+    {% endfor %}
+  </div>
 </section>
 
      <footer>
