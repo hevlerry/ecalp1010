@@ -200,6 +200,7 @@
     </div>
 </header>
 
+{% load tz %}
 <section id="products">
   <h2>Products</h2>
         <div class="products">
@@ -214,7 +215,7 @@
             <p>Mobile Number: +63 {{ product.mobile_number }}</p>
             <p>Location: {{ product.location }}</p>
             <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
-            <p>Posted at: {{ product.created_at }}</p>
+            <p>{{ product.created_at|timezone:"Asia/Manila" }}</a></p>
         </div>
     </a>
 {% endfor %}

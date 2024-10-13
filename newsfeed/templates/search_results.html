@@ -243,6 +243,7 @@
     </div>
 </header>
 
+{% load tz %}
 <section id="search-results">
     <h2>Search Results</h2>
     {% if products %}
@@ -264,7 +265,7 @@
                             </div>
                             <div class="posted-info">
                                 <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" style="color: red;">{{ product.user.username }}</a></p>
-                                <p>Posted at: {{ product.created_at }}</p>
+                                <p>{{ product.created_at|timezone:"Asia/Manila" }}</a></p>
                             </div>
                         </div>
                     </div>

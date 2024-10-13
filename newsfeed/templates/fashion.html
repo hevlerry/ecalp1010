@@ -162,6 +162,7 @@
         </div>
     </header>
 
+{% load tz %}
 <section id="fashion">
     <h2>Fashion and Beauty</h2>
     {% if messages %}
@@ -183,7 +184,7 @@
                     <p>Mobile Number: {{ product.mobile_number }}</p>
                     <p>Location: {{ product.location }}</p>
                     <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
-                    <p>Posted at: {{ product.created_at }}</p>
+                    <p>{{ product.created_at|timezone:"Asia/Manila" }}</a></p>
                 </a>
             </div>
         {% empty %}

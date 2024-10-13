@@ -303,6 +303,7 @@
                 <p>Phone Number: {{ user.profile.mobile_number }}</p>
                 <p>Address: {{ user.profile.address }}</p>
             </div>
+{% load tz %}
 <div class="posted-listings">
     <h2>Posted Listings:</h2>
     {% for product in products %}
@@ -310,7 +311,9 @@
         <h3>{{ product.title }}</h3>
         <p>{{ product.description }}</p>
         <p>Price: {{ product.price }}</p>
-        <p>Posted at: {{ product.created_at }}</p>
+        <p>Location: {{ product.location }}</p>
+        <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
+       <p>{{ product.created_at|timezone:"Asia/Manila" }}</a></p>
         <div class="button-group">
             <div class="button-container">
                 <a href="{% url 'newsfeed:listing_detail' product.pk %}" class="button view-button" style="background-color: #007bff; color: #ffffff;">

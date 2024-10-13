@@ -188,6 +188,7 @@
             </div>
         {% endfor %}
     {% endif %}
+    {% load tz %}
     <div class="products">
         {% for product in products %}
             <div class="product">
@@ -200,7 +201,7 @@
                     <p>Mobile Number: +63 {{ product.mobile_number }}</p>
                     <p>Location: {{ product.location }}</p>
                     <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
-                    <p>Posted at: {{ product.created_at }}</p>
+                    <p>{{ product.created_at|timezone:"Asia/Manila" }}</a></p>
                 </a>
             </div>
         {% empty %}

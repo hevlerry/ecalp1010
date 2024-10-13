@@ -170,6 +170,7 @@
             </nav>
         </div>
     </header>
+           {% load tz %}
         <section id="listing-detail">
         {% if messages %}
             {% for message in messages %}
@@ -193,7 +194,7 @@
                 <p>Mobile Number: +63 {{ product.mobile_number }}</p>
                 <p>Location: {{ product.location }}</p>
                 <p>Posted by: </p> <p> <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
-                <p>Posted at: {{ product.created_at }}</p>
+                <p>{{ product.created_at|timezone:"Asia/Manila" }}</a></p>
             </div>
            <div class="button-group"">
 {% if product.user != request.user and not request.user.is_superuser %}
