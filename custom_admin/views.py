@@ -1,9 +1,12 @@
+from datetime import timezone
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required, user_passes_test
 from newsfeed.models import Report, UserReport, Product
 from main.models import ContactMessage
-
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
 def is_staff(user):
     return user.is_staff or user.is_superuser
@@ -36,22 +39,30 @@ def delete_user(request, pk):
 
 @login_required
 @user_passes_test(is_staff)
-def messages(request):
+def contact_messages(request):
     messages = ContactMessage.objects.all()
     return render(request, 'messages.html', {'messages': messages})
 
 @login_required
 @user_passes_test(is_staff)
 def products(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(deleted_at__isnull=True)  # Assuming you have a 'deleted_at' field
     return render(request, 'products.html', {'products': products})
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 
 @login_required
 @user_passes_test(is_staff)
 def delete_product(request, pk):
-    product = Product.objects.get(pk=pk)
-    product.delete()
-    return redirect('custom_admin:products')
+    product = get_object_or_404(Product, pk=pk)
+    if request.user.has_perm('custom_admin.delete_product', product):
+        product.deleted_at = timezone.now()
+        product.save()
+        messages.success(request, 'Product deleted successfully.')
+        return redirect('custom_admin:admin_dashboard')
+    else:
+        return HttpResponseForbidden()
 
 @login_required
 @user_passes_test(is_staff)

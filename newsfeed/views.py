@@ -21,10 +21,20 @@ def logout_view(request):
     logout(request)
     return redirect('index', logout=True)
 
+
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
 def newsfeed(request):
-    products = Product.objects.filter(is_active=True).order_by('-created_at')
+    # Filter out products that are inactive or have been deleted
+    products = Product.objects.filter(is_active=True, deleted_at__isnull=True).order_by('-created_at')
+
+    # Convert created_at to local time for each product
     for product in products:
         product.created_at = timezone.localtime(product.created_at)
+
     return render(request, 'newsfeed.html', {'products': products})
 
 def listing_detail(request, pk):
@@ -90,7 +100,7 @@ def profile(request, pk):
         edit_form = None
         rating_form = RatingForm()
 
-    products = Product.objects.filter(user=user, is_active=True)
+    products = Product.objects.filter(user=user, deleted_at__isnull=True)
 
     # Pass ratings and summary ratings to the template context in all cases
     return render(request, 'profile.html',
@@ -116,7 +126,7 @@ def get_rating_summary(ratings):
 def delete_listing(request, pk):
     listing = get_object_or_404(Product, pk=pk)
     if listing.user == request.user:
-        listing.is_active = False
+        listing.deleted_at = timezone.now()
         listing.save()
         messages.success(request, 'Listing deleted successfully!')
         return redirect('newsfeed:profile', pk=request.user.pk)
@@ -180,7 +190,7 @@ def category_selection(request):
 
 def search(request):
     query = request.GET.get('q')
-    products = Product.objects.filter(is_active=True, title__icontains=query).order_by('-created_at')
+    products = Product.objects.filter(is_active=True, deleted_at__isnull=True, title__icontains=query).order_by('-created_at')
     for product in products:
         product.created_at = timezone.localtime(product.created_at)
     return render(request, 'search_results.html', {'products': products})
@@ -189,25 +199,25 @@ from django.shortcuts import render
 from .models import Product
 
 def electronics(request):
-    products = Product.objects.filter(category='Electronics', is_active=True)
+    products = Product.objects.filter(category='Electronics', is_active=True, deleted_at__isnull=True)
     for product in products:
         product.created_at = timezone.localtime(product.created_at)
     return render(request, 'electronics.html', {'products': products})
 
 def fashion(request):
-    products = Product.objects.filter(category='Fashion and Beauty', is_active=True)
+    products = Product.objects.filter(category='Fashion and Beauty', is_active=True, deleted_at__isnull=True)
     for product in products:
         product.created_at = timezone.localtime(product.created_at)
     return render(request, 'fashion.html', {'products': products})
 
 def garden(request):
-    products = Product.objects.filter(category='Home and Garden', is_active=True)
+    products = Product.objects.filter(category='Home and Garden', is_active=True, deleted_at__isnull=True)
     for product in products:
         product.created_at = timezone.localtime(product.created_at)
     return render(request, 'garden.html', {'products': products})
 
 def sports(request):
-    products = Product.objects.filter(category='Sports and Leisure', is_active=True)
+    products = Product.objects.filter(category='Sports and Leisure', is_active=True, deleted_at__isnull=True)
     for product in products:
         product.created_at = timezone.localtime(product.created_at)
     return render(request, 'sports.html', {'products': products})
