@@ -173,28 +173,39 @@ def report_user(request, pk):
 
 def category_selection(request):
     return render(request, 'category_selection.html')
+
 def search(request):
     query = request.GET.get('q')
-    products = Product.objects.filter(title__icontains=query)
+    products = Product.objects.filter(is_active=True, title__icontains=query).order_by('-created_at')
+    for product in products:
+        product.created_at = timezone.localtime(product.created_at)
     return render(request, 'search_results.html', {'products': products})
 
 from django.shortcuts import render
 from .models import Product
 
 def electronics(request):
-    products = Product.objects.filter(category='Electronics')
+    products = Product.objects.filter(category='Electronics', is_active=True)
+    for product in products:
+        product.created_at = timezone.localtime(product.created_at)
     return render(request, 'electronics.html', {'products': products})
 
 def fashion(request):
-    products = Product.objects.filter(category='Fashion and Beauty')
+    products = Product.objects.filter(category='Fashion and Beauty', is_active=True)
+    for product in products:
+        product.created_at = timezone.localtime(product.created_at)
     return render(request, 'fashion.html', {'products': products})
 
 def garden(request):
-    products = Product.objects.filter(category='Home and Garden')
+    products = Product.objects.filter(category='Home and Garden', is_active=True)
+    for product in products:
+        product.created_at = timezone.localtime(product.created_at)
     return render(request, 'garden.html', {'products': products})
 
 def sports(request):
-    products = Product.objects.filter(category='Sports and Leisure')
+    products = Product.objects.filter(category='Sports and Leisure', is_active=True)
+    for product in products:
+        product.created_at = timezone.localtime(product.created_at)
     return render(request, 'sports.html', {'products': products})
 
 @login_required

@@ -8,6 +8,9 @@ User = get_user_model()
 
 
 
+from django.db import models
+from django.utils import timezone
+
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -19,9 +22,14 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=50, choices=[('Electronics', 'Electronics'), ('Fashion and Beauty', 'Fashion and Beauty'), ('Home and Garden', 'Home and Garden'), ('Sports and Leisure', 'Sports and Leisure'), ('Others', 'Others')], default='Others')
     is_active = models.BooleanField(default=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.title
+
+    def delete(self, *args, **kwargs):
+        self.deleted_at = timezone.now()
+        self.save()
 
 from django.db import models
 from django.contrib.auth.models import User
