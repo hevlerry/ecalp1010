@@ -14,6 +14,7 @@ from django.contrib import messages
 from .models import Rating
 from .forms import ProfileForm, RatingForm
 from django.db.models import Avg, Count
+from django.utils import timezone
 
 def logout_view(request):
     logout(request)
@@ -21,6 +22,8 @@ def logout_view(request):
 
 def newsfeed(request):
     products = Product.objects.filter(is_active=True).order_by('-created_at')
+    for product in products:
+        product.created_at = timezone.localtime(product.created_at)
     return render(request, 'newsfeed.html', {'products': products})
 
 def listing_detail(request, pk):
