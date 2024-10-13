@@ -68,35 +68,83 @@
         }
 
         /* Styles for the carousel */
-        .carousel-container {
-            position: relative;
-            display: block;
-        }
+        .carousel-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    width: 100%; /* Add this line */
+}
+
+
+      .carousel-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px; /* Fixed width */
+    max-height: 300px; /* Maximum height */
+    overflow: hidden;
+    height: 500px;
+}
 
         .carousel-inner {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: hidden;
-        }
-
-        .carousel-item {
-            flex: 0 0 100%;
-            margin: 0 10px;
-        }
-
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden; /* Prevent scrolling */
+    width: 100%; /* Full width */
+    justify-content: center; /* Center the carousel items */
+    align-items: center; /* Center items vertically */
+}
         .carousel-controls {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
+    display: flex;
+    justify-content: center; /* Center the carousel controls */
+    margin-top: 10px;
+    width: 100%;
+}
 
-        .carousel-prev, .carousel-next {
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
+    .carousel-item img {
+    object-fit: cover; /* Maintain aspect ratio */
+    max-width: 100%; /* Prevent image from overflowing */
+    max-height: 200px; /* Set a fixed height */
+    border-radius: 10px; /* Apply border radius */
+}
+        .carousel-item {
+    display: flex; /* Center the image */
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+    width: 100%; /* Full width for carousel item */
+}
+
+       .carousel-controls {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+}
+
+.carousel-prev, .carousel-next {
+    background-color: gray;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.carousel-prev {
+    margin-right: auto;
+}
+
+.carousel-next {
+    margin-left: auto;
+}
 
         /* Styles for the buttons */
         .button-group {
@@ -172,6 +220,11 @@
             text-decoration: underline !important;
             color: red !important;
         }
+.listing-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
     </style>
 </head>
 <body>
@@ -211,24 +264,28 @@
                             {% for image in product.productimage_set.all %}
                                 <div class="carousel-item">
                                     <a href="{{ image.image.url }}" target="_blank">
-                                        <img src='{{ image.image.url }}' style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
+                                        <img src='{{ image.image.url }}' alt="Product Image">
                                     </a>
                                 </div>
                             {% endfor %}
                         </div>
                         <div class="carousel-controls">
+                        {% if product.productimage_set.all|length > 1 %}
                             <button class="carousel-prev">Prev</button>
                             <button class="carousel-next">Next</button>
-                        </div>
+                        {% endif %}
+                    </div>
                     </div>
                     <h2>{{ product.title }}</h2>
-                    <p>Category: {{ product.category }}</p>
-                    <p>Description: {{ product.description }}</p>
-                    <p>Price: {{ product.price }}</p>
-                    <p>Mobile Number: +63 {{ product.mobile_number }}</p>
-                    <p>Location: {{ product.location }}</p>
-                    <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
-                    <p>Posted on: {{ product.created_at|timezone:"Asia/Manila" }}</p>
+                   <div class="listing-details">
+                        <p>Category: {{ product.category }}</p>
+                        <p>Description: {{ product.description }}</p>
+                        <p>Price: {{ product.price }}</p>
+                        <p>Mobile Number: +63 {{ product.mobile_number }}</p>
+                        <p>Location: {{ product.location }}</p>
+                        <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
+                        <p>Posted on: {{ product.created_at|timezone:"Asia/Manila" }}</p>
+                    </div>
 
                     <div class="button-group">
                         {% if product.user != request.user and not request.user.is_superuser %}
