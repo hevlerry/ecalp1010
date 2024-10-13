@@ -110,11 +110,11 @@ footer {
     <section id="edit-profile">
     <div class="container">
         <h2>Edit Profile</h2>
-        <form method="post" class="report-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="report-button" style="background-color: green; color: white;"><i class="fas fa-save"></i> Save Changes</button>
-        </form>
+        <form method="post" class="report-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="report-button" style="background-color: green; color: white;"><i class="fas fa-save"></i> Save Changes</button>
+</form>
     </div>
 </section>
     <footer>
