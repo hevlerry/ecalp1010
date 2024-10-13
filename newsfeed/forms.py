@@ -13,6 +13,7 @@ class PostProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PostProductForm, self).__init__(*args, **kwargs)
         self.fields['mobile_number'].widget.attrs['placeholder'] = '+63 9123456789'
+        self.fields['image'].widget.attrs['multiple'] = True
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']

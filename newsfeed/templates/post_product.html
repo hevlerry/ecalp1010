@@ -200,9 +200,10 @@ header {
                     {{ form.price }}
                 </div>
                 <div class="form-group">
-                    <label for="id_image">Image:</label>
-                    {{ form.image }}
-                </div>
+    <label for="id_image">Images:</label>
+    {{ form.image }}
+    <small class="text-muted">You can upload multiple images.</small>
+</div>
                 <div class="form-group">
                     <label for="id_mobile_number">Mobile Number (+63)</label>
                     {% if form.mobile_number.errors %}

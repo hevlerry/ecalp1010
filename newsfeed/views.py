@@ -1,5 +1,5 @@
 from custom_admin.views import is_staff
-from .models import Product, User, UserReport
+from .models import Product, User, UserReport, ProductImage
 from .forms import PostProductForm
 from django.contrib import messages
 from .forms import ProfileForm
@@ -15,6 +15,7 @@ from .models import Rating
 from .forms import ProfileForm, RatingForm
 from django.db.models import Avg, Count
 from django.utils import timezone
+
 
 def logout_view(request):
     logout(request)
@@ -36,8 +37,11 @@ def post_product(request):
         if form.is_valid():
             product = form.save(commit=False)
             product.user = request.user
-            product.category = request.POST['category']
+            product.category = form.cleaned_data['category']
             product.save()
+            # Save multiple images
+            for file in request.FILES.getlist('image'):
+                ProductImage.objects.create(product=product, image=file)
             messages.success(request, 'Your product has been successfully listed!')
             return redirect('newsfeed:newsfeed')
     else:
