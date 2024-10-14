@@ -218,6 +218,14 @@
     transform: translateY(-15px);
     transition: all 0.3s ease;
 }
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
     </style>
 </head>
 <body>
@@ -235,23 +243,33 @@
 <section id="user-reports">
   <h2>Reported Users</h2>
   <div class="reports">
-    {% for report in reports %}
-      <div class="report">
-        <h2>Reported User: {{ report.user.username }}</a></h2>
-        <div class="report-details">
-          <p><strong>Reported by:</strong> {{ report.reported_by.username }}</p>
-          <p><strong>Reason:</strong> {{ report.reason }}</p>
-        </div>
-        <div class="button-group">
-          <button class="new-delete-button">
-            <a href="{% url 'custom_admin:delete_user_report' report.pk %}" onclick="return confirm('Are you sure you want to delete this report?')">
-              Delete
-            </a>
-          </button>
-        </div>
-       <p> </p><a href="{% url 'newsfeed:profile' report.user.pk %}" class="btn btn-primary">Review User</a> </p>
-      </div>
-    {% endfor %}
+    {% if reports %}
+      {% for report in reports %}
+                <div class="report">
+                  <div class="reports">
+            {% for report in reports %}
+              <div class="report">
+                <h2>Reported User: {{ report.user.username }}</a></h2>
+                <div class="report-details">
+                  <p><strong>Reported by:</strong> {{ report.reported_by.username }}</p>
+                  <p><strong>Reason:</strong> {{ report.reason }}</p>
+                </div>
+                <div class="button-group">
+                  <button class="new-delete-button">
+                    <a href="{% url 'custom_admin:delete_user_report' report.pk %}" onclick="return confirm('Are you sure you want to delete this report?')">
+                      Delete
+                    </a>
+                  </button>
+                </div>
+               <p> </p><a href="{% url 'newsfeed:profile' report.user.pk %}" class="btn btn-primary">Review User</a> </p>
+              </div>
+            {% endfor %}
+          </div>
+                </div>
+      {% endfor %}
+    {% else %}
+      <p>NO REPORTS AS OF THE MOMENT</p>
+    {% endif %}
   </div>
 </section>
 

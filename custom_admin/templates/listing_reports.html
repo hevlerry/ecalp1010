@@ -256,6 +256,14 @@ header {
     transform: translateY(-15px);
     transition: all 0.3s ease;
 }
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
     </style>
 </head>
 <body>
@@ -270,28 +278,32 @@ header {
     </div>
 </header>
 
-  <section id="listing-reports">
+<section id="listing-reports">
     <h2>Listing Reports</h2>
     <div class="reports">
-        {% for report in reports %}
-            <div class="report">
-                <h2>Reported Listing: {{ report.product.title }}</h2>
-                <div class="report-details">
-                    <p><strong>Reason:</strong> {{ report.reason }}</p>
-                    <p><strong>Reported by:</strong> {{ report.user.username }}</p>
-                </div>
-                <div class="button-group">
-                    <div class="delete-button-container">
-                        <button class="new-delete-button">
-                            <a href="{% url 'custom_admin:delete_listing_report' report.pk %}" onclick="return confirm('Are you sure you want to delete this report?')">
-                                Delete
-                            </a>
-                        </button>
+        {% if reports %}
+            {% for report in reports %}
+                <div class="report">
+                    <h2>Reported Listing: {{ report.product.title }}</h2>
+                    <div class="report-details">
+                        <p><strong>Reason:</strong> {{ report.reason }}</p>
+                        <p><strong>Reported by:</strong> {{ report.user.username }}</p>
                     </div>
-                    <a href="{% url 'newsfeed:listing_detail' report.product.pk %}" class="btn btn-primary">Review Listing</a>
+                    <div class="button-group">
+                        <div class="delete-button-container">
+                            <button class="new-delete-button">
+                                <a href="{% url 'custom_admin:delete_listing_report' report.pk %}" onclick="return confirm('Are you sure you want to delete this report?')">
+                                    Delete
+                                </a>
+                            </button>
+                        </div>
+                        <a href="{% url 'newsfeed:listing_detail' report.product.pk %}" class="btn btn-primary">Review Listing</a>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <p>NO REPORTS AS OF THE MOMENT</p>
+        {% endif %}
     </div>
 </section>
 

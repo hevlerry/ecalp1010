@@ -190,6 +190,14 @@
 .message {
     margin: 10px; /* Adjust the margin value here */
 }
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
     </style>
 </head>
 <body>
@@ -204,23 +212,27 @@
     </div>
 </header>
 
-   <section id="messages">
+<section id="messages">
     <h2>Messages</h2>
     <div class="messages">
-        {% for message in messages %}
-            <div class="message">
-                <h2>Name: {{ message.name }}</h2>
-                <p><b>Email:</b> {{ message.email }}</p>
-                <p><b>Message:</b> {{ message.message }}</p>
-                <div class="button-group">
-    <button class="new-delete-button">
-        <a href="{% url 'custom_admin:delete_message' message.pk %}" onclick="return confirm('Are you sure you want to delete this message?')">
-            Delete
-        </a>
-    </button>
-</div>
-            </div>
-        {% endfor %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">
+                    <h2>Name: {{ message.name }}</h2>
+                    <p><b>Email:</b> {{ message.email }}</p>
+                    <p><b>Message:</b> {{ message.message }}</p>
+                    <div class="button-group">
+                        <button class="new-delete-button">
+                            <a href="{% url 'custom_admin:delete_message' message.pk %}" onclick="return confirm('Are you sure you want to delete this message?')">
+                                Delete
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>NO MESSAGES AS OF THE MOMENT</p>
+        {% endif %}
     </div>
 </section>
 
