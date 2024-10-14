@@ -189,11 +189,16 @@ def category_selection(request):
     return render(request, 'category_selection.html')
 
 def search(request):
-    query = request.GET.get('q')
-    products = Product.objects.filter(is_active=True, deleted_at__isnull=True, title__icontains=query).order_by('-created_at')
-    for product in products:
-        product.created_at = timezone.localtime(product.created_at)
-    return render(request, 'search_results.html', {'products': products})
+    if request.method == 'GET':
+        query = request.GET.get('q')
+        if query:
+            users = User.objects.filter(username__icontains=query, is_superuser=False)  # Exclude superusers
+            products = Product.objects.filter(title__icontains=query) | Product.objects.filter(description__icontains=query)
+            products = products.filter(is_active=True, deleted_at__isnull=True).order_by('-created_at')
+            for product in products:
+                product.created_at = timezone.localtime(product.created_at)
+            return render(request, 'search_results.html', {'query': query, 'users': users, 'products': products})
+    return redirect('newsfeed:newsfeed')
 
 from django.shortcuts import render
 from .models import Product
