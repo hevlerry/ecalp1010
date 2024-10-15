@@ -278,14 +278,14 @@
                     </div>
                     <h2>{{ product.title }}</h2>
                    <div class="listing-details">
-                        <p>Category: {{ product.category }}</p>
-                        <p>Description: {{ product.description }}</p>
-                        <p>Price: {{ product.price }}</p>
-                        <p>Mobile Number: +63 {{ product.mobile_number }}</p>
-                        <p>Location: {{ product.location }}</p>
-                        <p>Posted by: <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
-                        <p>Posted on: {{ product.created_at|timezone:"Asia/Manila" }}</p>
-                    </div>
+                <p><strong>Category:</strong> {{ product.category }}</p>
+                <p><strong>Description:</strong> {{ product.description }}</p>
+                <p><strong>Price:</strong> {{ product.price }}</p>
+                <p><strong>Mobile Number:</strong> +63 {{ product.mobile_number }}</p>
+                <p><strong>Location:</strong> {{ product.location }}</p>
+                <p><strong>Posted by:</strong> <a href="{% url 'newsfeed:profile' product.user.pk %}" class="username-link">{{ product.user.username }}</a></p>
+                <p><strong>Posted on:</strong> {{ product.created_at|timezone:"Asia/Manila" }}</p>
+            </div>
 
                     <div class="button-group">
                         {% if product.user != request.user and not request.user.is_superuser %}

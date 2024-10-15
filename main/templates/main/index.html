@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="{% static 'main/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-      /* Global Styles */
+
       * {
         box-sizing: border-box;
         margin: 0;
-        padding: 0;
+        padding: 0px;
       }
       body, html {
         height: 100vh;
         width: 100vw;
-        font-family: 'Open Sans', sans-serif; /* Added a modern sans-serif font */
+        font-family: 'Open Sans', sans-serif;
         font-size: 16px;
       }
 
@@ -68,6 +68,7 @@
         padding: 20px;
         border-radius: 10px;
       }
+
       .home-content h2 {
         font-size: 36px;
         margin-bottom: 10px;
@@ -129,19 +130,21 @@
     <header>
         <div class="container">
             <h1 class="logo">MARKET PLACE</h1>
-            <nav>
-                <ul>
-                    <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-                </ul>
-            </nav>
+
         </div>
     </header>
 
-    <section id="home">
+    <section id="home" style="padding: 50px;">
     <div class="container">
-        <div class="home-content">
-            <h2 style="font-size: 72px;">Ecalp Techmar</h2>
-            <p>Buy and Sell</p>
+        <div class="home-content" style="margin: 0 auto; max-width: 800px; padding: 20px;">
+
+            <h2 style="font-size: 72px; margin-bottom: 20px;">Ecalp Techmar</h2>
+            <p style="margin-bottom: 30px;">Buy and Sell</p>
+            <nav style="margin-bottom: 40px;">
+                <a href="{% url 'login' %}" style="background-color: #000000; color: #fff; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 25px;">
+                    <i class="fas fa-shopping-cart" style="margin-right: 10px;"></i>Shop now!
+                </a>
+            </nav>
         </div>
     </div>
 </section>
