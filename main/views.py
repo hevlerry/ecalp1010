@@ -33,7 +33,7 @@ def register(request):
             else:
                 messages.error(request, 'Passwords do not match!')
         else:
-            messages.error(request, 'Invalid form data!')
+            messages.error(request, 'Invali d form data!')
     else:
         form = RegisterForm()
     return render(request, 'main/register.html', {'form': form})
