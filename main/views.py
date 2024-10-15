@@ -38,27 +38,6 @@ def register(request):
         form = RegisterForm()
     return render(request, 'main/register.html', {'form': form})
 
-def verify_email(request):
-    if request.method == 'POST':
-        form = VerifyEmailForm(request.POST)
-        if form.is_valid():
-            otp = form.cleaned_data['otp']
-            if otp == request.session['otp']:
-                username = request.session['username']
-                email = request.session['email']
-                password = request.session['password']
-                user = User.objects.create_user(username, email, password)
-                user.save()
-                messages.success(request, 'You have successfully registered!')
-                return redirect('login')
-            else:
-                messages.error(request, 'Invalid OTP!')
-        else:
-            messages.error(request, 'Invalid form data!')
-    else:
-        form = VerifyEmailForm()
-    return render(request, 'main/verify_email.html', {'form': form})
-
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)

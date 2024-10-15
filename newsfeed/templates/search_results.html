@@ -8,6 +8,46 @@
     <link rel="stylesheet" href="{% static 'main/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .user-profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.user-profile .image-container {
+    margin-right: 10px;
+}
+
+.user-profile img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.user-profile .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+}
+.user-link {
+    text-decoration: none;
+}
+.user-profile .info h2 {
+    margin-top: 0;
+}
+
+.user-profile .info p {
+    margin-bottom: 20px;
+    text-align: center;
+}
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -194,19 +234,28 @@
         {% if users %}
             <h3 style="text-align: center;">Users:</h3>
             <div class="users container">
-                <div class="row justify-content-center">
-                    {% for user in users %}
-                        <div class="col-md-4 mb-4">
-                            <a href="{% url 'newsfeed:profile' user.pk %}" class="user-link">
-                                <div class="user">
-                                    <h4>{{ user.username }}</h4>
-                                    <p>Joined: {{ user.date_joined }}</p>
-                                </div>
-                            </a>
+    <div class="row justify-content-center">
+        {% for user in users %}
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'newsfeed:profile' user.pk %}" class="user-link">
+                    <div class="user-profile">
+                        <div class="image-container">
+                            {% if user.profile.profile_picture %}
+                                <img src='{{ user.profile.profile_picture.url }}'>
+                            {% else %}
+                                <img src="{{ media/default/default_profile_picture.png" alt="No Profile Picture">
+                            {% endif %}
                         </div>
-                    {% endfor %}
-                </div>
+                        <div class="info">
+                            <h2>{{ user.username }}</h2>
+                            <p>Email: {{ user.email }}</p> <!-- Updated line -->
+                        </div>
+                    </div>
+                </a>
             </div>
+        {% endfor %}
+    </div>
+</div>
         {% endif %}
         {% if products %}
             <h3 style="text-align: center;">Products:</h3>
